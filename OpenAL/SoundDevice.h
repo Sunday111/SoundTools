@@ -10,7 +10,7 @@ public:
 	SoundDevice(const char* name = nullptr);
 	~SoundDevice();
 
-	long GetHandle() const;
+	void* GetHandle() const;
 
 	SoundDevice& operator=(SoundDevice&& that);
 	SoundDevice& operator=(const SoundDevice&) = delete;

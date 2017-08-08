@@ -138,11 +138,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SoundBuffer.cpp" />
     <ClCompile Include="SoundContext.cpp" />
     <ClCompile Include="SoundDevice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenAlTools.h" />
+    <ClInclude Include="SoundBuffer.h" />
     <ClInclude Include="SoundContext.h" />
     <ClInclude Include="SoundDevice.h" />
   </ItemGroup>

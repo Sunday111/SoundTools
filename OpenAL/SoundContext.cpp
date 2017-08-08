@@ -42,9 +42,9 @@ SoundContext::SoundContext(SoundContext&& that) = default;
 SoundContext::~SoundContext() = default;
 SoundContext& SoundContext::operator=(SoundContext&&) = default;
 
-long SoundContext::GetHandle() const
+void* SoundContext::GetHandle() const
 {
-	return reinterpret_cast<long>(m_d->context);
+	return m_d->context;
 }
 
 void SoundContext::SetCurrent() const

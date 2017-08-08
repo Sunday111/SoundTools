@@ -12,7 +12,7 @@ public:
 	SoundContext(SoundContext&& that);
 	~SoundContext();
 
-	long GetHandle() const;
+	void* GetHandle() const;
 	void SetCurrent() const;
 
 	SoundContext& operator=(SoundContext&&);

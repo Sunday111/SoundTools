@@ -33,9 +33,9 @@ SoundDevice::SoundDevice(const char* name) :
 }
 SoundDevice::~SoundDevice() = default;
 
-long SoundDevice::GetHandle() const
+void* SoundDevice::GetHandle() const
 {
-	return reinterpret_cast<long>(m_d->device);
+	return m_d->device;
 }
 
 SoundDevice& SoundDevice::operator=(SoundDevice&& that) = default;
