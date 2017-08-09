@@ -41,7 +41,7 @@ namespace
 	{
 		WavFile result;
 
-		std::ifstream file("owl.wav", std::ios::binary);
+		std::ifstream file(name, std::ios::binary);
 		assert(file.is_open());
 
 		file.read(reinterpret_cast<char*>(&result.riff), sizeof(result.riff));
@@ -79,6 +79,33 @@ namespace
 class SoundBuffer::Impl
 {
 public:
+	Impl() :
+		alBuffer(alInvalidId)
+	{
+	}
+
+	~Impl()
+	{
+		if (BufferIsValid())
+		{
+			OpenAlCallVoid(alDeleteBuffers, 1, (const ALuint*)&alBuffer);
+			alBuffer = alInvalidId;
+		}
+	}
+
+	bool BufferIsValid() const
+	{
+		return alBuffer != alInvalidId;
+	}
+
+	void Check() const
+	{
+		if (!BufferIsValid())
+		{
+			throw std::runtime_error("Trying to use deleted or invalid OpenAL buffer");
+		}
+	}
+
 	ALuint alBuffer;
 };
 
@@ -89,19 +116,27 @@ SoundBuffer::SoundBuffer(SoundBuffer&&) = default;
 SoundBuffer::~SoundBuffer() = default;
 SoundBuffer& SoundBuffer::operator=(SoundBuffer&&) = default;
 
+size_t SoundBuffer::GetId() const
+{
+	m_d->Check();
+	return m_d->alBuffer;
+}
+
 SoundBuffer SoundBuffer::LoadFromWavFile(const char* filename)
 {
 	auto wavFile = ReadWavFile(filename);
 
 	SoundBuffer result;
 	// Make new OpenAL buffer
-	OpenAlCall(alGenBuffers, 1, &result.m_d->alBuffer);
+	OpenAlCallVoid(alGenBuffers, 1, &result.m_d->alBuffer);
 
 	// Assign buffer data
-	OpenAlCall(alBufferData,
+	OpenAlCallVoid(alBufferData,
 		result.m_d->alBuffer,
 		ToAlFormat(wavFile.format.numChannels, wavFile.format.bitsPerSample),
 		static_cast<const void*>(wavFile.data.data.data()),
 		static_cast<int>(wavFile.data.data.size()),
 		static_cast<int>(wavFile.format.sampleRate));
+
+	return result;
 }

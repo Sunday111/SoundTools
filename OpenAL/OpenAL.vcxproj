@@ -141,12 +141,14 @@
     <ClCompile Include="SoundBuffer.cpp" />
     <ClCompile Include="SoundContext.cpp" />
     <ClCompile Include="SoundDevice.cpp" />
+    <ClCompile Include="SoundSource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenAlTools.h" />
     <ClInclude Include="SoundBuffer.h" />
     <ClInclude Include="SoundContext.h" />
     <ClInclude Include="SoundDevice.h" />
+    <ClInclude Include="SoundSource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,6 +12,8 @@ public:
 	SoundBuffer(const SoundBuffer&) = delete;
 	~SoundBuffer();
 
+	size_t GetId() const;
+
 	SoundBuffer& operator=(SoundBuffer&&);
 	SoundBuffer& operator=(const SoundBuffer&) = delete;
 
