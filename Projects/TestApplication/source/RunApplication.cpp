@@ -2,6 +2,7 @@
 
 #include <exception>
 #include <string>
+#include <sstream>
 #include <thread>
 #include <vector>
 
@@ -23,24 +24,40 @@ void RunApplication(std::istream& input, std::ostream& output)
 		std::vector<SoundSource> sources;
 
 		std::string line;
+		std::string tmp;
 		std::getline(input, line);
 
 		while (!line.empty())
 		{
-			try
+			std::stringstream lineStream(line);
+
+			lineStream >> tmp;
+
+			if (tmp == "open")
 			{
-				SoundBuffer buffer(line.c_str());
-				SoundSource source;
+				while (lineStream.peek() == ' ') lineStream.get();
 
-				source.SetBuffer(&buffer);
-				source.Play();
+				std::getline(lineStream, tmp);
 
-				buffers.push_back(std::move(buffer));
-				sources.push_back(std::move(source));
+				try
+				{
+					SoundBuffer buffer(tmp.c_str());
+					SoundSource source;
+
+					source.SetBuffer(&buffer);
+					source.Play();
+
+					buffers.push_back(std::move(buffer));
+					sources.push_back(std::move(source));
+				}
+				catch (const std::exception& ex)
+				{
+					output << ex.what() << std::endl;
+				}
 			}
-			catch (const std::exception& ex)
+			else
 			{
-				output << ex.what() << std::endl;
+				system(line.c_str());
 			}
 
 			std::getline(input, line);

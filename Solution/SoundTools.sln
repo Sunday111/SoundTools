@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoundTools", "..\Projects\SoundTools\SoundTools.vcxproj", "{033B1063-A1DE-4262-82B6-31C1C266C744}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestApplication", "..\Projects\TestApplication\TestApplication.vcxproj", "{F6057FCF-7EFB-4E4B-995A-40EA16599CEE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{033B1063-A1DE-4262-82B6-31C1C266C744} = {033B1063-A1DE-4262-82B6-31C1C266C744}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
