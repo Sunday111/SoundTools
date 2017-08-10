@@ -24,7 +24,7 @@ SoundDevice::SoundDevice(SoundDevice&& that) = default;
 SoundDevice::SoundDevice(const char* name) :
 	m_d(std::make_unique<Impl>())
 {
-	m_d->device = alcOpenDevice(nullptr);
+	m_d->device = alcOpenDevice(name);
 
 	if (m_d->device == nullptr)
 	{

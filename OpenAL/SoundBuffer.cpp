@@ -1,4 +1,3 @@
-#include <cassert>
 #include <fstream>
 #include <vector>
 
@@ -37,22 +36,30 @@ namespace
 		} data;
 	};
 
-	WavFile ReadWavFile(const char* name)
+	WavFile ReadWavFile(std::ifstream& file)
 	{
 		WavFile result;
 
-		std::ifstream file(name, std::ios::binary);
-		assert(file.is_open());
+		auto check = [](bool cond, const char* message)
+		{
+			if (!cond)
+			{
+				throw std::invalid_argument(message);
+			}
+		};
+
+		auto invalidFileFormatMessage = "Invalid file format";
 
 		file.read(reinterpret_cast<char*>(&result.riff), sizeof(result.riff));
-		assert(strncmp(result.riff.chunkId, "RIFF", 4) == 0);
-		assert(strncmp(result.riff.format, "WAVE", 4) == 0);
+		check(strncmp(result.riff.chunkId, "RIFF", 4) == 0, invalidFileFormatMessage);
+		check(strncmp(result.riff.format, "WAVE", 4) == 0, invalidFileFormatMessage);
 
 		file.read(reinterpret_cast<char*>(&result.format), sizeof(result.format));
-		assert(strncmp(result.format.subchunk1Id, "fmt ", 4) == 0);
+		check(strncmp(result.format.subchunk1Id, "fmt ", 4) == 0, invalidFileFormatMessage);
+		check(result.format.audioFormat == 1, invalidFileFormatMessage);
 
 		file.read(reinterpret_cast<char*>(&result.data.subchunk2Id), sizeof(result.data.subchunk2Id));
-		assert(strncmp(result.data.subchunk2Id, "data", 4) == 0);
+		check(strncmp(result.data.subchunk2Id, "data", 4) == 0, invalidFileFormatMessage);
 
 		file.read(reinterpret_cast<char*>(&result.data.subchunk2Size), sizeof(result.data.subchunk2Size));
 
@@ -72,7 +79,7 @@ namespace
 		case 8:  return stereo ? AL_FORMAT_STEREO8 : AL_FORMAT_MONO8;
 		}
 
-		return -1;
+		throw std::invalid_argument("Unexpected format");
 	}
 }
 
@@ -109,9 +116,31 @@ public:
 	ALuint alBuffer;
 };
 
-SoundBuffer::SoundBuffer() :
-	m_d(std::make_unique<Impl>())
+SoundBuffer::SoundBuffer(const char* filename) :
+	SoundBuffer(std::ifstream(filename, std::ios::binary))
 {}
+SoundBuffer::SoundBuffer(std::ifstream& file)
+{
+	if (!file.is_open())
+	{
+		throw std::invalid_argument("Could not open the file");
+	}
+
+	m_d = std::make_unique<Impl>();
+
+	auto wavFile = ReadWavFile(file);
+
+	// Make new OpenAL buffer
+	OpenAlCallVoid(alGenBuffers, 1, &m_d->alBuffer);
+
+	// Assign buffer data
+	OpenAlCallVoid(alBufferData,
+		m_d->alBuffer,
+		ToAlFormat(wavFile.format.numChannels, wavFile.format.bitsPerSample),
+		static_cast<const void*>(wavFile.data.data.data()),
+		static_cast<int>(wavFile.data.data.size()),
+		static_cast<int>(wavFile.format.sampleRate));
+}
 SoundBuffer::SoundBuffer(SoundBuffer&&) = default;
 SoundBuffer::~SoundBuffer() = default;
 SoundBuffer& SoundBuffer::operator=(SoundBuffer&&) = default;
@@ -120,23 +149,4 @@ size_t SoundBuffer::GetId() const
 {
 	m_d->Check();
 	return m_d->alBuffer;
-}
-
-SoundBuffer SoundBuffer::LoadFromWavFile(const char* filename)
-{
-	auto wavFile = ReadWavFile(filename);
-
-	SoundBuffer result;
-	// Make new OpenAL buffer
-	OpenAlCallVoid(alGenBuffers, 1, &result.m_d->alBuffer);
-
-	// Assign buffer data
-	OpenAlCallVoid(alBufferData,
-		result.m_d->alBuffer,
-		ToAlFormat(wavFile.format.numChannels, wavFile.format.bitsPerSample),
-		static_cast<const void*>(wavFile.data.data.data()),
-		static_cast<int>(wavFile.data.data.size()),
-		static_cast<int>(wavFile.format.sampleRate));
-
-	return result;
 }
