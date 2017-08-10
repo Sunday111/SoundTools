@@ -97,3 +97,24 @@ SoundSourceState SoundSource::GetState() const
 	
 	throw std::runtime_error("Unexpected sound source state");
 }
+
+void SoundSource::SetLooping(bool looping)
+{
+	m_d->Check();
+	OpenAlCallVoid(alSourcei,
+		m_d->sourceId,
+		static_cast<ALenum>(AL_LOOPING),
+		static_cast<ALint>(looping ? AL_TRUE: AL_FALSE));
+}
+
+bool SoundSource::GetLooping() const
+{
+	m_d->Check();
+
+	ALint result;
+	OpenAlCallVoid(alGetSourcei,
+		m_d->sourceId,
+		static_cast<ALenum>(AL_LOOPING), &result);
+
+	return result == 0 ? false : true;
+}

@@ -28,6 +28,9 @@ public:
 	void Stop() const;
 	SoundSourceState GetState() const;
 
+	void SetLooping(bool looping);
+	bool GetLooping() const;
+
 	SoundSource& operator=(SoundSource&&);
 	SoundSource& operator=(const SoundSource&) = delete;
 

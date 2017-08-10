@@ -29,6 +29,7 @@ namespace
 		SoundObject(const SoundObject&) = delete;
 
 		const SoundBuffer& GetBuffer() const { return m_buffer; }
+		SoundSource& GetSource() { return m_source; }
 		const SoundSource& GetSource() const { return m_source; }
 
 		const char* GetName() const { return m_name.c_str(); }
@@ -77,8 +78,14 @@ namespace
 			auto executeCommand = [&](const std::string& command)
 			{
 				std::stringstream lineStream(line);
+
+				auto skipSpaces = [&lineStream]()
+				{
+					while (lineStream.peek() == ' ') lineStream.get();
+				};
+
 				lineStream >> tmp;
-				while (lineStream.peek() == ' ') lineStream.get();
+				skipSpaces();
 
 				if (tmp == "play")
 				{
@@ -165,6 +172,27 @@ namespace
 					else
 					{
 						sound->GetSource().Play();
+					}
+				}
+				else if (tmp == "repeat")
+				{
+					lineStream >> tmp;
+					auto sound = findSound(tmp.c_str());
+
+					if (sound == nullptr)
+					{
+						sounds.emplace_back(tmp.c_str());
+						sound = &sounds.back();
+
+						sound->GetSource().SetLooping(true);
+						sound->GetSource().Play();
+					}
+					else
+					{
+						skipSpaces();
+						std::getline(lineStream, tmp);
+						std::transform(tmp.begin(), tmp.end(), tmp.begin(), ::tolower);
+						sound->GetSource().SetLooping(tmp == "true");
 					}
 				}
 				else
