@@ -6,5 +6,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\RunApplication.h" />
+    <ClInclude Include="source\ScopedThread.h" />
+    <ClInclude Include="source\ThreadSafeStreams.h" />
   </ItemGroup>
 </Project>

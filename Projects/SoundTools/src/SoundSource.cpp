@@ -59,8 +59,41 @@ void SoundSource::SetBuffer(SoundBuffer* buffer)
 		(ALint)buffer->GetId());
 }
 
+void SoundSource::Pause() const
+{
+	m_d->Check();
+	OpenAlCallVoid(alSourcePause, m_d->sourceId);
+}
+
 void SoundSource::Play() const
 {
 	m_d->Check();
 	OpenAlCallVoid(alSourcePlay, m_d->sourceId);
+}
+
+void SoundSource::Stop() const
+{
+	m_d->Check();
+	OpenAlCallVoid(alSourceStop, m_d->sourceId);
+}
+
+SoundSourceState SoundSource::GetState() const
+{
+	m_d->Check();
+
+	ALint result;
+	OpenAlCallVoid(alGetSourcei,
+		m_d->sourceId,
+		static_cast<ALenum>(AL_SOURCE_STATE),
+		&result);
+
+	switch (result)
+	{
+		case AL_INITIAL: return SoundSourceState::Initial;
+		case AL_PLAYING: return SoundSourceState::Playing;
+		case AL_PAUSED:  return SoundSourceState::Paused;
+		case AL_STOPPED: return SoundSourceState::Stopped;
+	}
+	
+	throw std::runtime_error("Unexpected sound source state");
 }

@@ -4,6 +4,14 @@
 
 #include "Common.h"
 
+enum class SoundSourceState
+{
+	Initial,
+	Playing,
+	Paused,
+	Stopped
+};
+
 class SoundBuffer;
 
 class SOUND_TOOLS_API SoundSource
@@ -15,7 +23,10 @@ public:
 	~SoundSource();
 
 	void SetBuffer(SoundBuffer* buffer);
+	void Pause() const;
 	void Play() const;
+	void Stop() const;
+	SoundSourceState GetState() const;
 
 	SoundSource& operator=(SoundSource&&);
 	SoundSource& operator=(const SoundSource&) = delete;
