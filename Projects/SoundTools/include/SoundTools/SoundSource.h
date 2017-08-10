@@ -2,9 +2,11 @@
 
 #include <memory>
 
+#include "Common.h"
+
 class SoundBuffer;
 
-class SoundSource
+class SOUND_TOOLS_API SoundSource
 {
 public:
 	SoundSource();

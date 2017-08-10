@@ -5,10 +5,10 @@
 #include <thread>
 #include <vector>
 
-#include "SoundDevice.h"
-#include "SoundContext.h"
-#include "SoundBuffer.h"
-#include "SoundSource.h"
+#include "SoundTools/SoundDevice.h"
+#include "SoundTools/SoundContext.h"
+#include "SoundTools/SoundBuffer.h"
+#include "SoundTools/SoundSource.h"
 
 void RunApplication(std::istream& input, std::ostream& output)
 {

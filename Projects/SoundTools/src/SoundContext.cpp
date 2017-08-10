@@ -1,10 +1,10 @@
-#include "SoundDevice.h"
+#include "SoundTools/SoundDevice.h"
 
 #include <stdexcept>
 
 #include "OpenAlTools.h"
 
-#include "SoundContext.h"
+#include "SoundTools/SoundContext.h"
 
 class SoundContext::Impl
 {

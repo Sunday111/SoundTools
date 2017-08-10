@@ -2,9 +2,11 @@
 
 #include <memory>
 
+#include "Common.h"
+
 class SoundDevice;
 
-class SoundContext
+class SOUND_TOOLS_API SoundContext
 {
 public:
 	SoundContext(SoundDevice* device);

@@ -4,7 +4,9 @@
 #include <fstream>
 #include <memory>
 
-class SoundBuffer
+#include "Common.h"
+
+class SOUND_TOOLS_API SoundBuffer
 {
 public:
 	SoundBuffer(const char* fileName);

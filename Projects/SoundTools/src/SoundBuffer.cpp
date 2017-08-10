@@ -3,7 +3,7 @@
 
 #include "OpenAlTools.h"
 
-#include "SoundBuffer.h"
+#include "SoundTools/SoundBuffer.h"
 
 namespace
 {

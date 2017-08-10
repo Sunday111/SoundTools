@@ -3,7 +3,7 @@
 
 #include "OpenAlTools.h"
 
-#include "SoundDevice.h"
+#include "SoundTools/SoundDevice.h"
 
 class SoundDevice::Impl
 {

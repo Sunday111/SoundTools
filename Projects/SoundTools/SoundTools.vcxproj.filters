@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\SoundBuffer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundContext.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundDevice.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundSource.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\SoundTools\Common.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SoundTools\SoundBuffer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SoundTools\SoundContext.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SoundTools\SoundDevice.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SoundTools\SoundSource.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenAlTools.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{30af1954-dd73-4e3e-8d78-4bc250746321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{7ea0e21e-ed5d-4af2-b2e4-f44ff902b8fa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

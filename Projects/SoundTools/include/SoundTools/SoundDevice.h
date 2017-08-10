@@ -2,7 +2,9 @@
 
 #include <memory>
 
-class SoundDevice
+#include "Common.h"
+
+class SOUND_TOOLS_API SoundDevice
 {
 public:
 	SoundDevice(SoundDevice&& that);

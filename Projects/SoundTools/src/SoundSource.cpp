@@ -1,6 +1,6 @@
 #include "OpenAlTools.h"
-#include "SoundBuffer.h"
-#include "SoundSource.h"
+#include "SoundTools/SoundBuffer.h"
+#include "SoundTools/SoundSource.h"
 
 class SoundSource::Impl
 {
