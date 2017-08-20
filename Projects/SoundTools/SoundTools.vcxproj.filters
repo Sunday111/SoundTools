@@ -13,6 +13,9 @@
     <ClCompile Include="src\SoundSource.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="src\WaveBuffer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\SoundTools\Common.h">
@@ -32,6 +35,9 @@
     </ClInclude>
     <ClInclude Include="src\OpenAlTools.h">
       <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SoundTools\WaveBuffer.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

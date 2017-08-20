@@ -9,8 +9,9 @@
 class SOUND_TOOLS_API SoundBuffer
 {
 public:
-	SoundBuffer(const char* fileName);
-	SoundBuffer(std::ifstream& file);
+	SoundBuffer(
+		size_t channelsCount, size_t bitsPerSample, size_t sampleRate,
+		const void* data, size_t dataSize);
 	SoundBuffer(SoundBuffer&&);
 	SoundBuffer(const SoundBuffer&) = delete;
 	~SoundBuffer();

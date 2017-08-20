@@ -162,6 +162,7 @@
     <ClCompile Include="src\SoundContext.cpp" />
     <ClCompile Include="src\SoundDevice.cpp" />
     <ClCompile Include="src\SoundSource.cpp" />
+    <ClCompile Include="src\WaveBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\SoundTools\Common.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="include\SoundTools\SoundContext.h" />
     <ClInclude Include="include\SoundTools\SoundDevice.h" />
     <ClInclude Include="include\SoundTools\SoundSource.h" />
+    <ClInclude Include="include\SoundTools\WaveBuffer.h" />
     <ClInclude Include="src\OpenAlTools.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
